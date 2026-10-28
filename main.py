@@ -243,6 +243,12 @@ def delta_t50s_to_plate_dataframe(bac_delta_t50s):
 
 def analyze_assay(file_path, bacteria_groups, interval_minutes=15):
     """Run F50/T50 normalization for user-defined bacteria control and test wells."""
+    _validate_bacteria_groups(bacteria_groups)
+    cleaned_df = read_assay_csv(file_path)
+    return analyze_assay_data(cleaned_df, bacteria_groups, interval_minutes)
+
+
+def _validate_bacteria_groups(bacteria_groups):
     if not bacteria_groups:
         raise ValueError("Add at least one bacteria group.")
 
@@ -276,8 +282,14 @@ def analyze_assay(file_path, bacteria_groups, interval_minutes=15):
         raise ValueError(
             "Each plate well can only belong to one bacteria group and one role."
         )
+    return all_wells, controls_by_group, wells_by_group
 
-    cleaned_df = read_assay_csv(file_path)
+
+def analyze_assay_data(cleaned_df, bacteria_groups, interval_minutes=15):
+    """Run F50/T50 normalization on cleaned measurements and selected wells."""
+    all_wells, controls_by_group, wells_by_group = _validate_bacteria_groups(
+        bacteria_groups
+    )
     available_wells = set(cleaned_df["Well"].unique())
     missing_wells = sorted(set(all_wells) - available_wells)
     if missing_wells:
