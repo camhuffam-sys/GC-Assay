@@ -1,7 +1,8 @@
 # Fluorescence assay data analysis
-Remade growth curve analysis from honours but in git.
+Remade script for generating delta t50 heatmaps using raw lab data from honours but in git.
 This program uses data output from a fluorometer/incubator reading a 96 well plate with a fluorescence based assay.
 The data in this folder is real fluorescence over time data from one of these assays.
+The delta t50 values calculated represent the difference in time taken for the test wells to reach 50% of the controls maximum fluorescence compared to the control wells.
 The assay was in quadruplicate with each row other than the ones with the control wells containing a different antibiotic at 3 different concentrations.
 The first 4 rows used A.aureus, the last 4 rows used P.aeruginosa.
 
